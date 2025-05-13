@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Car Rental System</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+  </head>
+  <body class="login-body">
+    <div class="login-container">
+      <div class="login-wrapper">
+        <div class="login-image">
+          <img
+            src="{% static 'images/login-banner.jpg' %}"
+            alt="Login Banner"
+          />
+          <div class="login-overlay"></div>
+        </div>
+        <div class="login-box">
+          <div class="login-header">
+            <i class="fas fa-car-side"></i>
+            <h1>Car Rental System</h1>
+            <p>Welcome back! Please login to your account.</p>
+          </div>
+          <form method="post">
+            {% csrf_token %}
+            <div class="input-group">
+              <label for="username">
+                <i class="fas fa-user"></i>
+                Username
+              </label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                required
+                placeholder="Enter your username"
+              />
+            </div>
+            <div class="input-group">
+              <label for="password">
+                <i class="fas fa-lock"></i>
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                required
+                placeholder="Enter your password"
+              />
+            </div>
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <button type="submit" class="login-btn">
+              <i class="fas fa-sign-in-alt"></i>
+              Login
+            </button>
+          </form>
+          <div class="login-footer">
+            <p>Available Credentials:</p>
+            <p>Admin: admin | 1234</p>
+            <p>User: user | 1234</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html> 
