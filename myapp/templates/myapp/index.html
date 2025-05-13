@@ -1,0 +1,35 @@
+{% extends 'myapp/base.html' %}
+{% load static %}
+
+{% block title %}Dashboard - Car Rental System{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+  <div class="hero-content">
+    <h1>Welcome to Car Rental System</h1>
+    <p>Manage your fleet and rentals with ease</p>
+  </div>
+</div>
+
+<main class="dashboard-main">
+  <section id="dashboard">
+    <div class="stats">
+      <div class="stat-card">
+        <i class="fas fa-car"></i>
+        <h3>Total Cars</h3>
+        <p id="totalCars">{{ total_cars }}</p>
+      </div>
+      <div class="stat-card">
+        <i class="fas fa-check-circle"></i>
+        <h3>Available Cars</h3>
+        <p id="availableCars">{{ available_cars }}</p>
+      </div>
+      <div class="stat-card">
+        <i class="fas fa-clock"></i>
+        <h3>Rented Cars</h3>
+        <p id="rentedCars">{{ rented_cars }}</p>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock %} 
