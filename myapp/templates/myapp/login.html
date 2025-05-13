@@ -27,7 +27,7 @@
             <h1>Car Rental System</h1>
             <p>Welcome back! Please login to your account.</p>
           </div>
-          <form method="post">
+          <form method="post" action="{% url 'login' %}{% if next %}?next={{ next }}{% endif %}">
             {% csrf_token %}
             <div class="input-group">
               <label for="username">
