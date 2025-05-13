@@ -55,7 +55,7 @@
           </button>
           {% endif %}
           {% endif %}
-          {% if can_delete_car %}
+          {% if perms.myapp.delete_car %}
           <button onclick="deleteCar('{{ car.id }}')" class="delete-btn">
             <i class="fas fa-trash"></i>
           </button>
