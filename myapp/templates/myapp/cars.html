@@ -22,7 +22,7 @@
           <option value="available">Available Cars</option>
           <option value="rented">Rented Cars</option>
         </select>
-        {% if user.is_staff %}
+        {% if can_add_car %}
         <button onclick="showAddCarModal()" class="add-car-btn">
           <i class="fas fa-plus"></i> Add New Car
         </button>
@@ -43,15 +43,19 @@
         </p>
         <div class="car-actions">
           {% if car.available %}
+          {% if perms.myapp.add_rental %}
           <button onclick="rentCar('{{ car.id }}')" class="rent-btn">
             Rent Now
           </button>
+          {% endif %}
           {% else %}
+          {% if perms.myapp.change_rental %}
           <button onclick="returnCar('{{ car.id }}')" class="return-btn">
             Return Car
           </button>
           {% endif %}
-          {% if user.is_staff %}
+          {% endif %}
+          {% if can_delete_car %}
           <button onclick="deleteCar('{{ car.id }}')" class="delete-btn">
             <i class="fas fa-trash"></i>
           </button>
@@ -62,6 +66,7 @@
     {% endfor %}
   </div>
 
+  {% if perms.myapp.view_rental %}
   <section id="rentals-section">
     <div class="section-header">
       <h2><i class="fas fa-clipboard-list"></i> Current Rentals</h2>
@@ -82,9 +87,11 @@
       {% endfor %}
     </div>
   </section>
+  {% endif %}
 </main>
 
 <!-- Add Car Modal -->
+{% if can_add_car %}
 <div id="addCarModal" class="modal">
   <div class="modal-content">
     <div class="modal-header">
@@ -124,8 +131,10 @@
     </form>
   </div>
 </div>
+{% endif %}
 
 <!-- Rent Car Modal -->
+{% if perms.myapp.add_rental %}
 <div id="rentCarModal" class="modal">
   <div class="modal-content">
     <div class="modal-header">
@@ -167,6 +176,7 @@
     </form>
   </div>
 </div>
+{% endif %}
 
 <script>
   function showAddCarModal() {

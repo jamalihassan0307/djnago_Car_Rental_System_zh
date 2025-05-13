@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
 from .models import Car, Customer, Rental, CustomUser
 from django.contrib.admin.views.decorators import staff_member_required
 from decimal import Decimal
+from django.core.exceptions import PermissionDenied
 
 def login_view(request):
     next_url = request.GET.get('next', 'home')
@@ -22,6 +23,9 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+def permission_denied_view(request, exception=None):
+    return render(request, 'myapp/permission_denied.html', status=403)
 
 @login_required
 def home(request):
@@ -42,6 +46,8 @@ def cars(request):
     context = {
         'cars': cars,
         'rentals': rentals,
+        'can_delete_car': request.user.has_perm('myapp.delete_car'),
+        'can_add_car': request.user.has_perm('myapp.add_car'),
     }
     return render(request, 'myapp/cars.html', context)
 
@@ -49,7 +55,8 @@ def cars(request):
 def about(request):
     return render(request, 'myapp/about.html')
 
-@staff_member_required
+@login_required
+@permission_required('myapp.add_car', raise_exception=True)
 def add_car(request):
     if request.method == 'POST':
         model = request.POST.get('carModel')
@@ -67,6 +74,7 @@ def add_car(request):
     return redirect('cars')
 
 @login_required
+@permission_required('myapp.add_rental', raise_exception=True)
 def rent_car(request, car_id):
     car = get_object_or_404(Car, id=car_id)
     if request.method == 'POST':
@@ -100,6 +108,7 @@ def rent_car(request, car_id):
     return redirect('cars')
 
 @login_required
+@permission_required('myapp.change_rental', raise_exception=True)
 def return_car(request, car_id):
     car = get_object_or_404(Car, id=car_id)
     rental = Rental.objects.filter(car=car, status='active').first()
@@ -113,7 +122,8 @@ def return_car(request, car_id):
     
     return redirect('cars')
 
-@staff_member_required
+@login_required
+@permission_required('myapp.delete_car', raise_exception=True)
 def delete_car(request, car_id):
     car = get_object_or_404(Car, id=car_id)
     car.delete()
