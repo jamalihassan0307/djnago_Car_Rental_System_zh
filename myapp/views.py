@@ -43,11 +43,22 @@ def home(request):
 def cars(request):
     cars = Car.objects.all()
     rentals = Rental.objects.filter(status='active')
+    
+    # Check permissions
+    can_add_car = request.user.has_perm('myapp.add_car')
+    can_delete_car = request.user.has_perm('myapp.delete_car')
+    can_rent_car = request.user.has_perm('myapp.add_rental')
+    can_return_car = request.user.has_perm('myapp.change_rental')
+    can_view_rentals = request.user.has_perm('myapp.view_rental')
+    
     context = {
         'cars': cars,
         'rentals': rentals,
-        'can_delete_car': request.user.has_perm('myapp.delete_car'),
-        'can_add_car': request.user.has_perm('myapp.add_car'),
+        'can_add_car': can_add_car,
+        'can_delete_car': can_delete_car,
+        'can_rent_car': can_rent_car,
+        'can_return_car': can_return_car,
+        'can_view_rentals': can_view_rentals,
     }
     return render(request, 'myapp/cars.html', context)
 
