@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Car Rental System</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+  </head>
+  <body class="login-body">
+    <div class="login-container">
+      <div class="login-wrapper">
+        <div class="login-image">
+          <img
+            src="https://images.unsplash.com/photo-1485291571150-772bcfc10da5?w=1600"
+            alt="Login Banner"
+          />
+          <div class="login-overlay"></div>
+        </div>
+        <div class="login-box">
+          <div class="login-header">
+            <i class="fas fa-car-side"></i>
+            <h1>Car Rental System</h1>
+            <p>Welcome back! Please login to your account.</p>
+          </div>
+          <form id="loginForm" onsubmit="return validateLogin(event)">
+            <div class="input-group">
+              <label for="username">
+                <i class="fas fa-user"></i>
+                Username
+              </label>
+              <input
+                type="text"
+                id="username"
+                required
+                placeholder="Enter your username"
+              />
+            </div>
+            <div class="input-group">
+              <label for="password">
+                <i class="fas fa-lock"></i>
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                required
+                placeholder="Enter your password"
+              />
+            </div>
+            <button type="submit" class="login-btn">
+              <i class="fas fa-sign-in-alt"></i>
+              Login
+            </button>
+          </form>
+          <div class="login-footer">
+            <p>Available Credentials:</p>
+            <p>Admin: admin | 1234</p>
+            <p>User: user | 1234</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
