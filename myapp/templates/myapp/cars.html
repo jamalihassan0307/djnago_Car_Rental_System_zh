@@ -179,7 +179,19 @@
 {% endif %}
 
 <script>
+  // Add these variables at the top of your script
+  const userPermissions = {
+    canDeleteCar: {% if perms.myapp.delete_car %}true{% else %}false{% endif %},
+    canAddCar: {% if perms.myapp.add_car %}true{% else %}false{% endif %},
+    canRentCar: {% if perms.myapp.add_rental %}true{% else %}false{% endif %},
+    canReturnCar: {% if perms.myapp.change_rental %}true{% else %}false{% endif %}
+  };
+
   function showAddCarModal() {
+    if (!userPermissions.canAddCar) {
+      alert("You don't have permission to add cars.");
+      return;
+    }
     document.getElementById('addCarModal').style.display = 'block';
   }
 
@@ -189,6 +201,10 @@
   }
 
   function rentCar(carId) {
+    if (!userPermissions.canRentCar) {
+      alert("You don't have permission to rent cars.");
+      return;
+    }
     const modal = document.getElementById('rentCarModal');
     const form = document.getElementById('rentCarForm');
     form.action = `/rent_car/${carId}/`;
@@ -196,12 +212,20 @@
   }
 
   function returnCar(carId) {
+    if (!userPermissions.canReturnCar) {
+      alert("You don't have permission to return cars.");
+      return;
+    }
     if (confirm('Are you sure you want to return this car?')) {
       window.location.href = `/return_car/${carId}/`;
     }
   }
 
   function deleteCar(carId) {
+    if (!userPermissions.canDeleteCar) {
+      alert("You don't have permission to delete cars.");
+      return;
+    }
     if (confirm('Are you sure you want to delete this car?')) {
       window.location.href = `/delete_car/${carId}/`;
     }
