@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Car Rental System{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+  </head>
+  <body>
+    {% if user.is_authenticated %}
+    <nav class="navbar fixed-nav">
+      <div class="nav-content">
+        <div class="logo">
+          <i class="fas fa-car-side"></i> Car Rental System
+        </div>
+        <ul class="nav-links">
+          <li><a href="{% url 'home' %}" {% if request.resolver_match.url_name == 'home' %}class="active"{% endif %}>Home</a></li>
+          <li><a href="{% url 'cars' %}" {% if request.resolver_match.url_name == 'cars' %}class="active"{% endif %}>Cars</a></li>
+          <li><a href="{% url 'about' %}" {% if request.resolver_match.url_name == 'about' %}class="active"{% endif %}>About</a></li>
+          <li>
+            <span id="username-display"><i class="fas fa-user"></i> {{ user.username }}</span>
+          </li>
+          <li>
+            <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    {% endif %}
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+
+    {% if user.is_authenticated %}
+    <footer class="main-footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3><i class="fas fa-car-side"></i> Car Rental System</h3>
+          <p>Your trusted partner in car rentals</p>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="{% url 'home' %}"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="{% url 'cars' %}"><i class="fas fa-car"></i> Cars</a></li>
+            <li><a href="{% url 'about' %}"><i class="fas fa-info-circle"></i> About</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Connect With Us</h3>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Car Rental System. All rights reserved.</p>
+      </div>
+    </footer>
+    {% endif %}
+  </body>
+</html> 
