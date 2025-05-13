@@ -45,11 +45,17 @@ def cars(request):
     rentals = Rental.objects.filter(status='active')
     
     # Check permissions
+    print("Checking user permissions...")
     can_add_car = request.user.has_perm('myapp.add_car')
+    print(f"Can add car: {can_add_car}")
     can_delete_car = request.user.has_perm('myapp.delete_car')
+    print(f"Can delete car: {can_delete_car}")
     can_rent_car = request.user.has_perm('myapp.add_rental')
+    print(f"Can rent car: {can_rent_car}")
     can_return_car = request.user.has_perm('myapp.change_rental')
+    print(f"Can return car: {can_return_car}")
     can_view_rentals = request.user.has_perm('myapp.view_rental')
+    print(f"Can view rentals: {can_view_rentals}")
     
     context = {
         'cars': cars,
