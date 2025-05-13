@@ -1,0 +1,22 @@
+{% extends 'myapp/base.html' %}
+{% load static %}
+
+{% block title %}Permission Denied - Car Rental System{% endblock %}
+
+{% block content %}
+<div class="permission-denied">
+    <div class="error-container">
+        <i class="fas fa-exclamation-circle"></i>
+        <h1>Permission Denied</h1>
+        <p>Sorry, you don't have permission to perform this action.</p>
+        <div class="error-actions">
+            <a href="{% url 'home' %}" class="btn-primary">
+                <i class="fas fa-home"></i> Go to Home
+            </a>
+            <a href="javascript:history.back()" class="btn-secondary">
+                <i class="fas fa-arrow-left"></i> Go Back
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %} 
