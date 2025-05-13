@@ -7,16 +7,17 @@ from django.contrib.admin.views.decorators import staff_member_required
 from decimal import Decimal
 
 def login_view(request):
+    next_url = request.GET.get('next', 'home')
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('home')
+            return redirect(next_url)
         else:
             messages.error(request, 'Invalid credentials!')
-    return render(request, 'myapp/login.html')
+    return render(request, 'myapp/login.html', {'next': next_url})
 
 def logout_view(request):
     logout(request)
