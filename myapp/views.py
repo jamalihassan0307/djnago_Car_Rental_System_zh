@@ -125,6 +125,9 @@ def return_car(request, car_id):
 @login_required
 @permission_required('myapp.delete_car', raise_exception=True)
 def delete_car(request, car_id):
+    if not request.user.has_perm('myapp.delete_car'):
+        raise PermissionDenied("You don't have permission to delete cars.")
+    
     car = get_object_or_404(Car, id=car_id)
     car.delete()
     messages.success(request, 'Car has been deleted successfully!')
